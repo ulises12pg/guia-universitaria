@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "guia-universitaria": {
+    "innova-uni": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -62,10 +62,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "guia-universitaria:build:production"
+              "buildTarget": "innova-uni:build:production"
             },
             "development": {
-              "buildTarget": "guia-universitaria:build:development"
+              "buildTarget": "innova-uni:build:development"
             }
           },
           "defaultConfiguration": "development"

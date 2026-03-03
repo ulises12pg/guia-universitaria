@@ -3,16 +3,16 @@
 
 @include mat.core();
 
-$guia-universitaria-primary: mat.m2-define-palette(mat.$m2-indigo-palette);
-$guia-universitaria-accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
-$guia-universitaria-warn: mat.m2-define-palette(mat.$m2-red-palette);
+$innovauni-primary: mat.m2-define-palette(mat.$m2-indigo-palette);
+$innovauni-accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
+$innovauni-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
-$guia-universitaria-theme: mat.m2-define-light-theme((color: (primary: $guia-universitaria-primary,
-        accent: $guia-universitaria-accent,
-        warn: $guia-universitaria-warn,
+$innovauni-theme: mat.m2-define-light-theme((color: (primary: $innovauni-primary,
+        accent: $innovauni-accent,
+        warn: $innovauni-warn,
       )));
 
-@include mat.all-component-themes($guia-universitaria-theme);
+@include mat.all-component-themes($innovauni-theme);
 
 // Variables CSS globales
 :root {

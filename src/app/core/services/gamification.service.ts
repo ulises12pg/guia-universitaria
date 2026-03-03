@@ -223,7 +223,7 @@ export class GamificationService {
 
     private async loadUser(userId: string, email: string | undefined): Promise<void> {
         this.currentUserId = userId;
-        const key = `guia_uni_data_${userId}`;
+        const key = `innovauni_data_${userId}`;
 
         // 1. Load from LocalStorage first (Cache / Offline)
         const stored = localStorage.getItem(key);
@@ -284,7 +284,7 @@ export class GamificationService {
 
     private loadGuestUser(): void {
         this.currentUserId = null;
-        const key = 'guia_universitaria_user';
+        const key = 'innovauni_user';
         const stored = localStorage.getItem(key);
         if (stored) {
             const user = JSON.parse(stored);
@@ -587,10 +587,10 @@ export class GamificationService {
 
     private guardarProgreso(): void {
         const user = this.usuarioSubject.value;
-        let key = 'guia_universitaria_user';
+        let key = 'innovauni_user';
 
         if (this.currentUserId) {
-            key = `guia_uni_data_${this.currentUserId}`;
+            key = `innovauni_data_${this.currentUserId}`;
         }
 
         // 1. Save to LocalStorage (Immediate feedback)
@@ -701,7 +701,7 @@ export class GamificationService {
         yPos += 15;
         doc.setFontSize(18);
         doc.setTextColor('#E91E63'); // Fun pink
-        doc.text('InnovaUni 2.0 reconoce a:', width / 2, yPos, { align: 'center' });
+        doc.text('InnovaUni 1.2 reconoce a:', width / 2, yPos, { align: 'center' });
 
         yPos += 20;
         doc.setFont('helvetica', 'bolditalic');
@@ -793,7 +793,7 @@ export class GamificationService {
         doc.setFont('courier', 'bold');
         doc.setFontSize(10);
         doc.setTextColor('#888');
-        doc.text(`Generado el: ${today} en InnovaUni 2.0 - ¡Sigue explorando!`, width / 2, footerY, { align: 'center' });
+        doc.text(`Generado el: ${today} en InnovaUni 1.2 - ¡Sigue explorando!`, width / 2, footerY, { align: 'center' });
         // Save
         doc.save(`certificado_innovauni_${user.nombre.replace(/\s+/g, '_')}.pdf`);
     }
@@ -823,7 +823,7 @@ export class GamificationService {
     }
 
     hardReset(): void {
-        localStorage.removeItem('guia_universitaria_user');
+        localStorage.removeItem('innovauni_user');
         window.location.href = '/'; // Force reload to root, which triggers onboarding check
     }
     async compartirResultadosComoImagen(elementId: string, nombreArchivo: string = 'resultado-innovauni.png', ignoreClase: string = 'no-capture'): Promise<void> {

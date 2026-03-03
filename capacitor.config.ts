@@ -1,20 +1,20 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.universidad.guia',
-  appName: 'InnovaUni 2.0',
-  webDir: 'dist/guia-universitaria/browser',
+  appId: 'com.innovauni.app',
+  appName: 'InnovaUni 1.2',
+  webDir: 'dist/innova-uni/browser',
 
   plugins: {
     SplashScreen: {
-      launchShowDuration: 3000,
+      launchShowDuration: 0,
       launchAutoHide: true,
       backgroundColor: '#ffffff',
       androidSplashResourceName: 'splash',
       androidScaleType: 'CENTER',
       showSpinner: true,
       androidSpinnerStyle: 'large',
-      spinnerColor: '#ffffff',
+      spinnerColor: '#667eea',
       splashFullScreen: true,
       splashImmersive: true
     },
@@ -25,7 +25,7 @@ const config: CapacitorConfig = {
   android: {
     buildOptions: {
       keystorePath: 'release-key.keystore',
-      keystoreAlias: 'guia-universitaria',
+      keystoreAlias: 'innovauni',
     }
   }
 };

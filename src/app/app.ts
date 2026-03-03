@@ -13,7 +13,7 @@ import { AdMobService } from './services/admob.service';
   styleUrl: './app.scss'
 })
 export class App implements OnInit {
-  protected readonly title = signal('InnovaUni 2.0');
+  protected readonly title = signal('InnovaUni 1.2');
 
   constructor(
     private dialog: MatDialog,
@@ -33,10 +33,10 @@ export class App implements OnInit {
       case 'terms':
         title = 'Términos y Condiciones';
         content = `
-          <p>Bienvenido a InnovaUni 2.0. Al usar esta aplicación, aceptas nuestros términos.</p>
+          <p>Bienvenido a InnovaUni 1.2. Al usar esta aplicación, aceptas nuestros términos.</p>
           <p>1. <strong>Uso Personal:</strong> Esta herramienta es para orientación vocacional personal.</p>
           <p>2. <strong>Sin Garantías:</strong> Los resultados son sugerencias basadas en tus respuestas y no garantizan admisión a ninguna institución.</p>
-          <p>3. <strong>Propiedad Intelectual:</strong> Todo el contenido es propiedad de InnovaUni 2.0 2026.</p>
+          <p>3. <strong>Propiedad Intelectual:</strong> Todo el contenido es propiedad de InnovaUni 1.2 2026.</p>
         `;
         break;
       case 'data':
@@ -55,7 +55,7 @@ export class App implements OnInit {
           <ul>
             <li>No compartimos tu información con terceros.</li>
             <li>Tienes derecho a borrar todos tus datos usando la opción "Hard Reset" en el Dashboard.</li>
-            <li>Para cualquier duda, contáctanos en privacidad@guiauniversitaria.mx.</li>
+            <li>Para cualquier duda, contáctanos en privacidad@innovauni.mx.</li>
           </ul>
         `;
         break;
