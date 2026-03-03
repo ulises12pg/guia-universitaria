@@ -1,0 +1,222 @@
+<div class="universities-container">
+    <div class="header" *ngIf="viewMode === 'list'">
+        <div class="header-back-btn">
+            <button mat-icon-button (click)="backToDashboard()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+        </div>
+        <h1>Universidades Destacadas de México</h1>
+        <p>Explora las mejores opciones para tu futuro académico</p>
+
+        <mat-tab-group (selectedIndexChange)="onTabChange($event)" class="favorites-tab">
+            <mat-tab label="Todas"></mat-tab>
+            <mat-tab label="Favoritos">
+                <ng-template mat-tab-label>
+                    <mat-icon class="tab-icon">favorite</mat-icon>
+                    Favoritos
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+    <!-- Comparison Floating Bar (Redesigned) -->
+    <div class="comparison-floating-bar" *ngIf="comparisonList.length > 0 && viewMode === 'list'">
+        <div class="bar-content glass-effect">
+
+            <div class="selected-avatars">
+                <div *ngFor="let u of comparisonList" class="uni-avatar" [matTooltip]="u.nombre">
+                    <mat-icon>{{u.logo}}</mat-icon>
+                </div>
+                <!-- Placeholders -->
+                <div class="uni-avatar placeholder" *ngIf="comparisonList.length < 2"></div>
+                <div class="uni-avatar placeholder" *ngIf="comparisonList.length < 3"></div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="bar-actions">
+                <button mat-icon-button class="trash-btn" (click)="resetComparison()" matTooltip="Limpiar todo">
+                    <mat-icon>delete_outline</mat-icon>
+                </button>
+                <button mat-mini-fab color="accent" class="compare-btn-icon" (click)="startComparison()"
+                    [disabled]="comparisonList.length < 2" matTooltip="Comparar ahora">
+                    <mat-icon>compare_arrows</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIST VIEW -->
+    <div class="universities-grid" *ngIf="viewMode === 'list'">
+        <mat-card class="uni-card" *ngFor="let uni of filteredUniversities"
+            [class.selected-compare]="isInComparison(uni)">
+            <div class="card-header">
+                <div class="uni-icon">
+                    <mat-icon>{{uni.logo}}</mat-icon>
+                </div>
+                <div class="uni-title">
+                    <mat-card-title>{{uni.siglas || uni.nombre}}</mat-card-title>
+                    <mat-card-subtitle>{{uni.ubicacion}}</mat-card-subtitle>
+                </div>
+                <button mat-icon-button (click)="toggleFavorito(uni, $event)" [color]="isFavorite(uni) ? 'warn' : ''"
+                    class="fav-btn">
+                    <mat-icon>{{isFavorite(uni) ? 'favorite' : 'favorite_border'}}</mat-icon>
+                </button>
+                <button mat-icon-button (click)="toggleComparison(uni)" [color]="isInComparison(uni) ? 'accent' : ''">
+                    <mat-icon>{{isInComparison(uni) ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+                </button>
+            </div>
+
+            <mat-card-content>
+                <div class="tags">
+                    <span class="tag" [class.public]="uni.tipo === 'Publica'">{{uni.tipo}}</span>
+                    <span class="tag cost">Costo: {{uni.costoPromedio}}</span>
+                    <span class="tag income">Ingreso: {{uni.salarioPromedio}}</span>
+                </div>
+                <p class="uni-description">{{uni.descripcion | slice:0:120}}...</p>
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="openDetails(uni)">VER DETALLES</button>
+                <button mat-button (click)="visitWebsite(uni.sitioWeb)">
+                    <mat-icon>language</mat-icon> SITIO WEB
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+
+    <!-- DETAIL VIEW OVERLAY -->
+    <div class="overlay" *ngIf="viewMode === 'details' && selectedUniversity">
+        <div class="detail-card animate-up">
+            <button mat-icon-button class="close-btn" (click)="closeOverlay()">
+                <mat-icon>close</mat-icon>
+            </button>
+
+            <div class="detail-header">
+                <div class="detail-icon">
+                    <mat-icon>{{selectedUniversity.logo}}</mat-icon>
+                </div>
+                <div>
+                    <h2>{{selectedUniversity.nombre}}</h2>
+                    <p class="subtitle">{{selectedUniversity.ubicacion}} • {{selectedUniversity.tipo}}</p>
+                    <p class="description">{{selectedUniversity.descripcion}}</p>
+                    <div class="detail-actions" style="justify-content: center;">
+                        <button mat-flat-button color="primary" (click)="viewStudyPlan(selectedUniversity)">
+                            P. de Estudio
+                        </button>
+                        <button mat-stroked-button (click)="viewAdmissions(selectedUniversity)">
+                            Convoc.
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-content">
+                <div class="stats-column">
+                    <h3>Estadísticas Clave</h3>
+                    <div class="stat-row">
+                        <mat-icon>paid</mat-icon>
+                        <div>
+                            <label>Salario Promedio: </label>
+                            <span>{{selectedUniversity.salarioPromedio}}</span>
+                        </div>
+                    </div>
+                    <div class="stat-row">
+                        <mat-icon>work</mat-icon>
+                        <div>
+                            <label>Empleabilidad: </label>
+                            <span>{{selectedUniversity.empleabilidad}}</span>
+                        </div>
+                    </div>
+
+                    <div class="chart-container generic-radar">
+                        <!-- Generic Radar Chart (Minimalist) -->
+                        <svg viewBox="0 0 220 220" class="radar-chart">
+                            <!-- Background Circles -->
+                            <circle cx="110" cy="110" r="100" fill="none" stroke="#eee" stroke-width="1" />
+                            <circle cx="110" cy="110" r="75" fill="none" stroke="#eee" stroke-width="1" />
+                            <circle cx="110" cy="110" r="50" fill="none" stroke="#eee" stroke-width="1" />
+                            <circle cx="110" cy="110" r="25" fill="none" stroke="#eee" stroke-width="1" />
+
+                            <!-- Axes Lines -->
+                            <line x1="110" y1="110" x2="110" y2="10" stroke="#ddd" />
+                            <line x1="110" y1="110" x2="205" y2="79" stroke="#ddd" />
+                            <line x1="110" y1="110" x2="168" y2="190" stroke="#ddd" />
+                            <line x1="110" y1="110" x2="52" y2="190" stroke="#ddd" />
+                            <line x1="110" y1="110" x2="15" y2="79" stroke="#ddd" />
+
+                            <!-- Data Shape -->
+                            <polygon [attr.points]="getRadialPath(selectedUniversity.stats)" class="data-polygon"
+                                fill="rgba(102, 126, 234, 0.4)" stroke="#667eea" stroke-width="2" />
+
+                            <!-- Labels -->
+                            <text x="110" y="5" text-anchor="middle" font-size="10">Prestigio</text>
+                            <text x="215" y="75" text-anchor="start" font-size="10">Empleo</text>
+                            <text x="175" y="205" text-anchor="start" font-size="10">Salario</text>
+                            <text x="45" y="205" text-anchor="end" font-size="10">Acceso</text>
+                            <text x="5" y="75" text-anchor="end" font-size="10">Vida</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="careers-section" *ngIf="selectedUniversity.areas">
+                    <h3>Carreras Destacadas</h3>
+                    <mat-chip-set>
+                        <mat-chip *ngFor="let area of selectedUniversity.areas"
+                            (click)="searchCareer(selectedUniversity, area)" highlighted color="primary"
+                            style="cursor: pointer;">
+                            {{area}} <mat-icon matChipTrailingIcon>open_in_new</mat-icon>
+                        </mat-chip>
+                    </mat-chip-set>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- COMPARISON VIEW -->
+    <div class="comparison-view" *ngIf="viewMode === 'comparison'">
+        <div class="comparison-header">
+            <button mat-icon-button (click)="closeOverlay()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <h2>Comparación de Universidades</h2>
+        </div>
+
+        <div class="comparison-table">
+            <!-- Labels Column -->
+            <div class="col labels-col">
+                <div class="cell header-cell">
+                    <span class="label-text">Universidades</span>
+                </div>
+                <!-- Rows matching data -->
+                <div class="cell">Ubicación</div>
+                <div class="cell">Tipo</div>
+                <div class="cell">Costo</div>
+                <div class="cell">Salario Prom.</div>
+                <div class="cell">Empleabilidad</div>
+                <div class="cell">Prestigio</div>
+            </div>
+
+            <!-- Data Columns -->
+            <div class="col data-col" *ngFor="let uni of comparisonList">
+                <div class="cell header-cell">
+                    <div class="uni-identity">
+                        <div class="uni-icon-small">
+                            <mat-icon>{{uni.logo}}</mat-icon>
+                        </div>
+                        <strong>{{uni.siglas || uni.nombre}}</strong>
+                    </div>
+                    <button mat-stroked-button color="warn" class="remove-btn" (click)="removeFromComparison(uni)">
+                        <mat-icon>delete</mat-icon> Quitar
+                    </button>
+                </div>
+                <div class="cell">{{uni.ubicacion}}</div>
+                <div class="cell">{{uni.tipo}}</div>
+                <div class="cell">{{uni.costoPromedio}}</div>
+                <div class="cell">{{uni.salarioPromedio}}</div>
+                <div class="cell">{{uni.empleabilidad}}</div>
+                <div class="cell highlight">{{uni.stats.prestigio}}/100</div>
+            </div>
+        </div>
+    </div>
+</div>

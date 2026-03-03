@@ -1,0 +1,48 @@
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a237e 0%, #304ffe 100%);
+    padding: 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+
+    mat-card-header {
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 20px;
+
+        mat-card-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+    }
+
+    .full-width {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .actions {
+        margin-top: 20px;
+    }
+
+    .btn-submit {
+        height: 48px;
+        font-size: 1.1rem;
+    }
+
+    .actions-center {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+}

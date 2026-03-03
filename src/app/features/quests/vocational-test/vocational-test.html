@@ -1,0 +1,91 @@
+<div class="test-container">
+    <div class="header">
+        <button mat-icon-button (click)="volverAlDashboard()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h1>Test Vocacional</h1>
+    </div>
+
+    <div class="test-progress" *ngIf="!completado">
+        <mat-progress-bar mode="determinate" [value]="(preguntaActual / preguntas.length) * 100" color="accent">
+        </mat-progress-bar>
+        <span class="progress-text">Pregunta {{preguntaActual + 1}} de {{preguntas.length}}</span>
+    </div>
+
+    <div class="test-content" *ngIf="!completado && !mostrandoResultado">
+        <mat-card class="question-card" [@slideAnimation]="animationState">
+            <div class="question-header">
+                <span class="question-number">{{preguntaActual + 1}}</span>
+                <h2>{{preguntaActualPregunta.texto}}</h2>
+            </div>
+
+            <div class="options-grid">
+                <button mat-raised-button *ngFor="let opcion of preguntaActualPregunta.opciones" class="option-btn"
+                    [class.selected]="respuestaSeleccionada === opcion" (click)="seleccionarRespuesta(opcion)"
+                    [@pulse]="respuestaSeleccionada === opcion ? 'active' : 'inactive'">
+                    <mat-icon class="option-icon">{{opcion.icono}}</mat-icon>
+                    <span class="option-text">{{opcion.texto}}</span>
+                </button>
+            </div>
+
+            <div class="question-actions">
+                <button mat-raised-button color="primary" [disabled]="!respuestaSeleccionada"
+                    (click)="siguientePregunta()">
+                    {{esUltimaPregunta ? 'Ver Resultados' : 'Siguiente'}}
+                    <mat-icon>{{esUltimaPregunta ? 'emoji_events' : 'arrow_forward'}}</mat-icon>
+                </button>
+            </div>
+        </mat-card>
+    </div>
+
+    <!-- Pantalla de resultados -->
+    <div class="results-container" *ngIf="mostrandoResultado" [@fadeIn]>
+        <div class="result-card" id="resultado-card">
+            <div class="result-icon">🎉</div>
+            <h1>¡Test Completado!</h1>
+
+            <div class="area-recomendada" [style.background]="areaResultado.color">
+                <mat-icon>{{areaResultado.icono}}</mat-icon>
+                <h2>{{areaResultado.nombre}}</h2>
+                <p>{{areaResultado.descripcion}}</p>
+            </div>
+
+            <div class="carreras-sugeridas">
+                <h3>Carreras recomendadas para ti:</h3>
+                <div class="carreras-grid">
+                    <mat-chip-set>
+                        <mat-chip *ngFor="let carrera of areaResultado.carreras" color="primary" highlighted>
+                            {{carrera}}
+                        </mat-chip>
+                    </mat-chip-set>
+                </div>
+            </div>
+
+            <div class="rewards-section">
+                <h3>Recompensas obtenidas:</h3>
+                <div class="rewards-list">
+                    <div class="reward-item">
+                        <span class="reward-icon">⭐</span>
+                        <span>+{{experienciaGanada}} EXP</span>
+                    </div>
+                    <div class="reward-item" *ngIf="nuevaMedalla">
+                        <span class="reward-icon">🏅</span>
+                        <span>Medalla: {{nuevaMedalla}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-actions no-capture">
+                <button mat-raised-button color="primary" (click)="compartirResultados()">
+                    <mat-icon>share</mat-icon>
+                </button>
+                <button mat-raised-button color="accent" (click)="irAPersonalityTest()">
+                    <mat-icon>self_improvement</mat-icon>
+                </button>
+                <button mat-icon-button (click)="reiniciarTest()" matTooltip="Volver a hacer el test">
+                    <mat-icon>replay</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

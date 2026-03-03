@@ -1,0 +1,155 @@
+<div class="exams-container">
+    <div class="header">
+        <button mat-icon-button (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h1>CENEVAL / EXANI-II</h1>
+    </div>
+
+    <p class="intro-text">
+        El <strong>EXANI-II</strong> es el examen de admisión utilizado por la mayoría de las universidades en México.
+        Aquí encontrarás todo lo que necesitas saber para presentarlo en sus dos modalidades.
+    </p>
+
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" animationDuration="500ms">
+
+        <!-- Modalidad Presencial -->
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="tab-icon">school</mat-icon>
+                Presencial
+            </ng-template>
+
+            <div class="tab-content fade-in">
+                <mat-card class="info-card">
+                    <mat-card-header>
+                        <mat-card-title>Examen en Sede (Papel o Computadora)</mat-card-title>
+                        <mat-card-subtitle>La modalidad tradicional</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>Acudes a las instalaciones de la universidad o sede designada. Puede ser en formato impreso o
+                            en una computadora de la institución.</p>
+
+                        <h3>📋 ¿Qué llevar?</h3>
+                        <mat-list>
+                            <mat-list-item>
+                                <mat-icon matListItemIcon>badge</mat-icon>
+                                <div matListItemTitle>Pase de ingreso impreso</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <mat-icon matListItemIcon>face</mat-icon>
+                                <div matListItemTitle>Identificación oficial con fotografía</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <mat-icon matListItemIcon>edit</mat-icon>
+                                <div matListItemTitle>Lápiz del número 2 o 2 ½, goma y sacapuntas (para examen impreso)
+                                </div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <mat-icon matListItemIcon>calculate</mat-icon>
+                                <div matListItemTitle>Calculadora simple (no científica ni programable)</div>
+                            </mat-list-item>
+                        </mat-list>
+
+                        <h3>🚫 Prohibido</h3>
+                        <p>Celulares, relojes inteligentes, audífonos, mochilas, gorras o alimentos dentro del aula.</p>
+
+                        <div class="tip-box">
+                            <strong>Tip Pro:</strong> Llega al menos 30 minutos antes de la hora citada para ubicar tu
+                            salón sin prisas.
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </mat-tab>
+
+        <!-- Modalidad En Línea -->
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="tab-icon">computer</mat-icon>
+                En Línea (Desde Casa)
+            </ng-template>
+
+            <div class="tab-content fade-in">
+                <mat-card class="info-card">
+                    <mat-card-header>
+                        <mat-card-title>Examen Desde Casa</mat-card-title>
+                        <mat-card-subtitle>Monitoreo remoto activo</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>Realizas el examen en tu propia computadora, vigilado por cámara y micrófono durante toda la
+                            sesión.</p>
+
+                        <h3>💻 Requisitos Técnicos</h3>
+                        <mat-list>
+                            <mat-list-item>
+                                <mat-icon matListItemIcon>laptop_windows</mat-icon>
+                                <div matListItemTitle>Computadora de escritorio o laptop (No tablets/celulares)</div>
+                                <div matListItemLine>Windows 8, 10 u 11 / Mac OS 10.12+</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <mat-icon matListItemIcon>videocam</mat-icon>
+                                <div matListItemTitle>Cámara web y micrófono funcionales</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <mat-icon matListItemIcon>wifi</mat-icon>
+                                <div matListItemTitle>Internet estable (mínimo 2 MB de subida/bajada)</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <mat-icon matListItemIcon>security</mat-icon>
+                                <div matListItemTitle>Navegador seguro instalado (proporcionado por Ceneval)</div>
+                            </mat-list-item>
+                        </mat-list>
+
+                        <h3>🏠 Ambiente</h3>
+                        <p>Debes estar solo en una habitación iluminada, sin ruido, y con escritorio limpio (sin libros
+                            ni apuntes).</p>
+
+                        <div class="tip-box warning">
+                            <strong>¡Cuidado!</strong> Desviar la vista de la pantalla, hablar o levantarse puede ser
+                            motivo de cancelación del examen.
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+
+    <div class="structure-section">
+        <h2>Estructura del Examen</h2>
+        <div class="modules-grid">
+            <div class="module-card">
+                <mat-icon>menu_book</mat-icon>
+                <span>Comprensión Lectora</span>
+                <small>30 preguntas</small>
+            </div>
+            <div class="module-card">
+                <mat-icon>edit_note</mat-icon>
+                <span>Redacción Indirecta</span>
+                <small>30 preguntas</small>
+            </div>
+            <div class="module-card">
+                <mat-icon>functions</mat-icon>
+                <span>Pensamiento Matemático</span>
+                <small>30 preguntas</small>
+            </div>
+            <div class="module-card">
+                <mat-icon>psychology</mat-icon>
+                <span>Módulos Específicos</span>
+                <small>48 preguntas (Varían por carrera)</small>
+            </div>
+            <div class="module-card english">
+                <mat-icon>language</mat-icon>
+                <span>Inglés</span>
+                <small>Diagnóstico (No cuenta)</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="action-area">
+        <h3>¿Listo para practicar?</h3>
+        <button mat-raised-button color="primary" class="train-btn" (click)="goToTraining()">
+            <mat-icon>fitness_center</mat-icon> IR AL SIMULADOR
+        </button>
+    </div>
+</div>

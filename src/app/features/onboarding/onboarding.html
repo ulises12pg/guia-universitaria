@@ -1,0 +1,32 @@
+<div class="onboarding-container">
+    <div class="welcome-card">
+        <div class="avatar-container">
+            <img [src]="avatarUrl" alt="Avatar" class="avatar-img">
+        </div>
+
+        <h1>¡Bienvenido a tu InnovaUni 2.0</h1>
+        <p>Descubre tu vocación, explora universidades y construye tu futuro.</p>
+
+        <div class="registration-form">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nombre Completo</mat-label>
+                <input matInput [(ngModel)]="userData.nombre" placeholder="Ej. Juan Pérez" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Edad</mat-label>
+                <input matInput type="number" [(ngModel)]="userData.edad" placeholder="Ej. 18" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Escuela de Procedencia</mat-label>
+                <input matInput [(ngModel)]="userData.escuela" placeholder="Ej. Preparatoria No. 1" required>
+            </mat-form-field>
+        </div>
+
+        <button mat-raised-button color="primary" class="start-btn" (click)="comenzar()"
+            [disabled]="!userData.nombre || !userData.edad || !userData.escuela">
+            COMENZAR MI CAMINO
+        </button>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="auth-container">
+    <mat-card class="auth-card">
+        <mat-card-header>
+            <mat-card-title>{{ isLoginMode() ? 'Iniciar Sesión' : 'Registrarse' }}</mat-card-title>
+            <mat-card-subtitle>InnovaUni 2.0</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Correo Electrónico</mat-label>
+                    <input matInput formControlName="email" type="email" placeholder="ejemplo@correo.com">
+                    <mat-error *ngIf="authForm.get('email')?.hasError('required')">El correo es requerido</mat-error>
+                    <mat-error *ngIf="authForm.get('email')?.hasError('email')">Correo inválido</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput formControlName="password" type="password">
+                    <mat-error *ngIf="authForm.get('password')?.hasError('required')">La contraseña es
+                        requerida</mat-error>
+                    <mat-error *ngIf="authForm.get('password')?.hasError('minlength')">Mínimo 6 caracteres</mat-error>
+                </mat-form-field>
+
+                <div class="actions">
+                    <button mat-raised-button color="primary" type="submit" [disabled]="authForm.invalid || isLoading()"
+                        class="full-width btn-submit">
+                        {{ isLoading() ? 'Procesando...' : (isLoginMode() ? 'Entrar' : 'Crear Cuenta') }}
+                    </button>
+                </div>
+            </form>
+        </mat-card-content>
+
+        <mat-card-actions class="actions-center">
+            <button mat-button (click)="toggleMode()">
+                {{ isLoginMode() ? '¿No tienes cuenta? Regístrate' : '¿Ya tienes cuenta? Inicia Sesión' }}
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>

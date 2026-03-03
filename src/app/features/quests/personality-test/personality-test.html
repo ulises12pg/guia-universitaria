@@ -1,0 +1,84 @@
+<div class="test-container">
+    <div class="header">
+        <button mat-icon-button (click)="volverAlDashboard()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h1>Test de Personalidad</h1>
+    </div>
+
+    <div class="test-progress" *ngIf="!completado">
+        <mat-progress-bar mode="determinate" [value]="((preguntaActual + 1) / preguntas.length) * 100" color="accent">
+        </mat-progress-bar>
+        <span class="progress-text">Pregunta {{preguntaActual + 1}} de {{preguntas.length}}</span>
+    </div>
+
+    <div class="test-content" *ngIf="!completado">
+        <mat-card class="question-card" [@slideAnimation]="animationState">
+            <div class="question-header">
+                <span class="question-number">{{preguntaActual + 1}}</span>
+                <h2>{{currentQuestion.texto}}</h2>
+            </div>
+
+            <div class="options-grid">
+                <button mat-raised-button class="option-btn" [class.selected]="respuestaTemp === 'A'"
+                    (click)="seleccionarOpcion('A')" [@pulse]="respuestaTemp === 'A' ? 'active' : 'inactive'">
+                    <span class="option-label">A)</span>
+                    <span class="option-text">{{currentQuestion.opciones[0].texto}}</span>
+                </button>
+
+                <button mat-raised-button class="option-btn" [class.selected]="respuestaTemp === 'B'"
+                    (click)="seleccionarOpcion('B')" [@pulse]="respuestaTemp === 'B' ? 'active' : 'inactive'">
+                    <span class="option-label">B)</span>
+                    <span class="option-text">{{currentQuestion.opciones[1].texto}}</span>
+                </button>
+            </div>
+
+            <div class="question-actions">
+                <button mat-raised-button color="primary" [disabled]="!respuestaTemp" (click)="siguientePregunta()">
+                    {{ preguntaActual < preguntas.length - 1 ? 'Siguiente' : 'Ver Resultados' }} <mat-icon>{{
+                        preguntaActual < preguntas.length - 1 ? 'arrow_forward' : 'emoji_events' }}</mat-icon>
+                </button>
+            </div>
+        </mat-card>
+    </div>
+
+    <!-- Pantalla de resultados -->
+    <div class="results-container" *ngIf="completado" [@fadeIn]>
+        <div class="result-card" id="resultado-personalidad">
+            <div class="result-icon">
+                <mat-icon *ngIf="resultado === 'Introvertido'">self_improvement</mat-icon>
+                <mat-icon *ngIf="resultado === 'Extrovertido'">groups</mat-icon>
+                <mat-icon *ngIf="resultado === 'Ambivertido'">balance</mat-icon>
+            </div>
+            <h1>¡Test Completado!</h1>
+
+            <div class="area-recomendada" [style.background]="'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'">
+                <h2>{{ resultado }}</h2>
+                <p>{{ descripcionResultado }}</p>
+            </div>
+
+            <div class="rewards-section">
+                <h3>Recompensas obtenidas:</h3>
+                <div class="rewards-list">
+                    <div class="reward-item">
+                        <span class="reward-icon">⭐</span>
+                        <span>+80 XP Ganados</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-actions no-capture">
+                <button mat-raised-button color="primary" (click)="compartirResultados()">
+                    Compartir
+                </button>
+                <button mat-raised-button color="accent" (click)="volverAlDashboard()">
+                    <mat-icon>dashboard</mat-icon>
+                    Dashboard
+                </button>
+                <button mat-icon-button (click)="reiniciarTest()" matTooltip="Volver a hacer el test">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

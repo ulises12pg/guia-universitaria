@@ -1,0 +1,169 @@
+.exams-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: #f5f7fa;
+    padding-bottom: 80px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    color: #2c3e50;
+
+    h1 {
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+    button {
+        color: #2c3e50;
+    }
+}
+
+.intro-text {
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.tab-icon {
+    margin-right: 8px;
+}
+
+.info-card {
+    margin-top: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+
+    mat-card-header {
+        margin-bottom: 15px;
+    }
+
+    mat-card-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #3f51b5;
+    }
+
+    mat-card-subtitle {
+        color: #777;
+    }
+
+    h3 {
+        margin-top: 20px;
+        color: #444;
+        font-size: 1.1rem;
+        border-bottom: 2px solid #e0e0e0;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+    }
+
+    p {
+        color: #555;
+        line-height: 1.6;
+    }
+}
+
+.tip-box {
+    background: #e3f2fd;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    color: #1565c0;
+    font-size: 0.95rem;
+
+    &.warning {
+        background: #fff3e0;
+        color: #e65100;
+        border-left: 4px solid #ff9800;
+    }
+}
+
+.structure-section {
+    margin-top: 40px;
+
+    h2 {
+        font-size: 1.3rem;
+        color: #333;
+        margin-bottom: 20px;
+    }
+}
+
+.modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
+}
+
+.module-card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    mat-icon {
+        color: #3f51b5;
+        font-size: 28px;
+        width: 28px;
+        height: 28px;
+    }
+
+    span {
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: #333;
+    }
+
+    small {
+        color: #999;
+        font-size: 0.8rem;
+    }
+
+    &.english {
+        border: 1px dashed #ccc;
+        background: #fafafa;
+        opacity: 0.8;
+    }
+}
+
+.action-area {
+    margin-top: 40px;
+    text-align: center;
+
+    h3 {
+        color: #333;
+        margin-bottom: 15px;
+    }
+}
+
+.train-btn {
+    padding: 10px 30px;
+    font-size: 1.1rem;
+    border-radius: 30px;
+}
+
+/* Animations */
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
