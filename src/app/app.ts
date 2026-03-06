@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { LegalModalComponent } from './shared/components/legal-modal/legal-modal.component';
-import { AdMobService } from './services/admob.service';
+
 
 @Component({
   selector: 'app-root',
@@ -16,13 +16,10 @@ export class App implements OnInit {
   protected readonly title = signal('InnovaUni 1.2');
 
   constructor(
-    private dialog: MatDialog,
-    private admobService: AdMobService
+    private dialog: MatDialog
   ) { }
 
   async ngOnInit() {
-    await this.admobService.initialize();
-    await this.admobService.showBanner();
   }
 
   openLegal(type: 'terms' | 'data' | 'privacy') {

@@ -2,7 +2,7 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { GamificationService } from '../../../core/services/gamification.service';
-import { AdMobService } from '../../../services/admob.service';
+
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -231,7 +231,6 @@ export class VocationalTestComponent {
 
   constructor(
     private gamificationService: GamificationService,
-    private admobService: AdMobService,
     private cdr: ChangeDetectorRef,
     private router: Router
   ) {
@@ -331,9 +330,6 @@ export class VocationalTestComponent {
       this.gamificationService.actualizarProgresoLogro('vocacion_clara', 1);
       this.gamificationService.verificarProgresoMisiones('test_completado');
       this.gamificationService.saveVocationalTestResult(area);
-
-      // Mostrar interstitial al completar el test
-      this.admobService.showInterstitial();
 
       // Verificar si es el primer test
       if (this.gamificationService.getUsuarioActual().testsCompletados === 0) {

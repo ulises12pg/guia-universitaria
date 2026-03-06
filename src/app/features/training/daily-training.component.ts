@@ -8,7 +8,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { TrainingService, TrainingQuestion } from '../../core/services/training.service';
 import { GamificationService } from '../../core/services/gamification.service';
-import { AdMobService } from '../../services/admob.service';
+
 import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
@@ -232,7 +232,6 @@ export class DailyTrainingComponent {
     constructor(
         private trainingService: TrainingService,
         private gamificationService: GamificationService,
-        private admobService: AdMobService,
         private router: Router
     ) {
         this.questions = this.trainingService.getDailyChallenge(15);
@@ -288,21 +287,13 @@ export class DailyTrainingComponent {
         this.expEarned = 100 + (this.score * 20);
         this.gamificationService.registrarEntrenamientoCompletado(this.expEarned);
 
-        // Mostrar interstitial al terminar el entrenamiento
-        this.admobService.showInterstitial();
     }
 
     /**
      * Muestra un anuncio rewarded para desbloquear 5 preguntas extra
      */
     async watchAdForBonus() {
-        const shown = await this.admobService.showRewarded(() => {
-            this.bonusUsed = true;
-        });
-        if (!shown) {
-            // Si no hay anuncio disponible (ej: en web), dar gratis
-            this.bonusUsed = true;
-        }
+        this.bonusUsed = true;
     }
 
     /**

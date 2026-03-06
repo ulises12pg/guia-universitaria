@@ -2,7 +2,7 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { GamificationService } from '../../../core/services/gamification.service';
-import { AdMobService } from '../../../services/admob.service';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -139,7 +139,6 @@ export class PersonalityTestComponent {
     constructor(
         private router: Router,
         private gamificationService: GamificationService,
-        private admobService: AdMobService,
         private cdr: ChangeDetectorRef
     ) {
         this.currentQuestion = this.preguntas[0];
@@ -198,9 +197,6 @@ export class PersonalityTestComponent {
         // Save result
         this.gamificationService.savePersonalityTestResult(this.resultado);
         this.gamificationService.agregarExperiencia(80, 'Test de Personalidad Completado');
-
-        // Mostrar interstitial al completar el test
-        this.admobService.showInterstitial();
     }
 
     setDescripcion(tipo: string) {
