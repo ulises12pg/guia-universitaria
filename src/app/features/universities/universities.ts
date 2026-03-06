@@ -148,6 +148,66 @@ export class UniversitiesComponent {
       descripcion: 'La institución pública de educación superior más importante del norte de México.',
       areas: ['Ingeniería', 'Salud', 'Agropecuaria'],
       stats: { prestigio: 87, empleabilidad: 86, salario: 80, accesibilidad: 85, calidadVida: 84 }
+    },
+    {
+      id: 'tecnm',
+      nombre: 'Tecnológico Nacional de México',
+      siglas: 'TecNM',
+      logo: 'engineering',
+      ubicacion: 'Nacional',
+      tipo: 'Publica',
+      costoPromedio: 'Muy Bajo',
+      salarioPromedio: '$15,000 - $30,000',
+      empleabilidad: 'Alta',
+      sitioWeb: 'https://www.tecnm.mx',
+      descripcion: 'La institución de educación superior tecnológica más grande de México y Latinoamérica.',
+      areas: ['Ingeniería', 'Tecnología', 'Ciencias'],
+      stats: { prestigio: 88, empleabilidad: 90, salario: 85, accesibilidad: 95, calidadVida: 80 }
+    },
+    {
+      id: 'uaeh',
+      nombre: 'Universidad Autónoma del Estado de Hidalgo',
+      siglas: 'UAEH',
+      logo: 'account_balance',
+      ubicacion: 'Pachuca, Hidalgo',
+      tipo: 'Publica',
+      costoPromedio: 'Bajo',
+      salarioPromedio: '$12,000 - $25,000',
+      empleabilidad: 'Media',
+      sitioWeb: 'https://www.uaeh.edu.mx',
+      descripcion: 'La máxima casa de estudios del estado de Hidalgo, con una amplia oferta educativa y cultural.',
+      areas: ['Salud', 'Ciencias Sociales', 'Ingeniería', 'Humanidades'],
+      stats: { prestigio: 85, empleabilidad: 82, salario: 78, accesibilidad: 90, calidadVida: 85 }
+    },
+    {
+      id: 'ufd',
+      nombre: 'Universidad del Fútbol y Ciencias del Deporte',
+      siglas: 'UFD',
+      logo: 'sports_soccer',
+      ubicacion: 'Pachuca, Hidalgo',
+      tipo: 'Privada',
+      costoPromedio: 'Alto',
+      salarioPromedio: '$15,000 - $35,000',
+      empleabilidad: 'Alta',
+      sitioWeb: 'https://ufd.mx',
+      descripcion: 'Institución pionera enfocada exclusivamente en el deporte, sus ciencias y gestión.',
+      areas: ['Deporte', 'Ciencias de la Salud', 'Negocios', 'Comunicación'],
+      stats: { prestigio: 86, empleabilidad: 88, salario: 80, accesibilidad: 65, calidadVida: 90 }
+    },
+    {
+      id: 'uvm',
+      nombre: 'Universidad del Valle de México',
+      siglas: 'UVM',
+      logo: 'school',
+      ubicacion: 'Nacional',
+      tipo: 'Privada',
+      costoPromedio: 'Medio',
+      salarioPromedio: '$18,000 - $35,000',
+      empleabilidad: 'Alta',
+      sitioWeb: 'https://uvm.mx',
+      descripcion: 'Una de las universidades privadas más grandes de México, enfocada en la preparación integral con visión global.',
+      areas: ['Salud', 'Negocios', 'Sociales', 'Ingeniería'],
+      stats: { prestigio: 84, empleabilidad: 88, salario: 82, accesibilidad: 80, calidadVida: 88 }
     }
   ];
 

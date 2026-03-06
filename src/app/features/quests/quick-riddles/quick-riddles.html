@@ -1,0 +1,78 @@
+<div class="test-container">
+    <div class="header">
+        <button mat-icon-button (click)="volverAlDashboard()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h1>{{ preguntaActualPregunta.categoria || 'Acertijos Rápidos' }}</h1>
+    </div>
+
+    <div class="test-progress" *ngIf="!completado">
+        <mat-progress-bar mode="determinate" [value]="(preguntaActual / preguntas.length) * 100" color="accent">
+        </mat-progress-bar>
+        <span class="progress-text">Acertijo {{preguntaActual + 1}} de {{preguntas.length}}</span>
+    </div>
+
+    <div class="test-content" *ngIf="!completado && !mostrandoResultado">
+        <mat-card class="question-card" [@slideAnimation]="animationState">
+            <div class="question-header">
+                <span class="question-number">{{preguntaActual + 1}}</span>
+                <h2>{{preguntaActualPregunta.texto}}</h2>
+            </div>
+
+            <div class="options-grid" [class.answered]="haRespondido">
+                <button mat-raised-button *ngFor="let opcion of preguntaActualPregunta.opciones" class="option-btn"
+                    [ngClass]="getOpcionClass(opcion)" (click)="seleccionarRespuesta(opcion)"
+                    [@pulse]="respuestaSeleccionada === opcion && !haRespondido ? 'active' : 'inactive'">
+                    <mat-icon class="option-icon">{{opcion.icono}}</mat-icon>
+                    <span class="option-text">{{opcion.texto}}</span>
+
+                    <mat-icon *ngIf="haRespondido && opcion.correcta"
+                        class="status-icon correct-icon">check_circle</mat-icon>
+                    <mat-icon *ngIf="haRespondido && respuestaSeleccionada === opcion && !opcion.correcta"
+                        class="status-icon incorrect-icon">cancel</mat-icon>
+                </button>
+            </div>
+
+            <div class="question-actions">
+                <button mat-raised-button color="primary" [disabled]="!haRespondido" (click)="siguientePregunta()">
+                    {{esUltimaPregunta ? 'Ver Resultados' : 'Siguiente Acertijo'}}
+                    <mat-icon>{{esUltimaPregunta ? 'emoji_events' : 'arrow_forward'}}</mat-icon>
+                </button>
+            </div>
+        </mat-card>
+    </div>
+
+    <!-- Pantalla de resultados -->
+    <div class="results-container" *ngIf="mostrandoResultado" [@fadeIn]>
+        <div class="result-card" id="resultado-card">
+            <div class="result-icon">🧠</div>
+            <h1>¡Acertijos Completados!</h1>
+
+            <div class="area-recomendada" [style.background]="colorResultado">
+                <mat-icon *ngIf="aciertos === preguntas.length">emoji_events</mat-icon>
+                <mat-icon *ngIf="aciertos < preguntas.length">psychology</mat-icon>
+                <h2>{{ calificacion }}</h2>
+                <p>Acertaste {{aciertos}} de {{preguntas.length}} acertijos.</p>
+            </div>
+
+            <div class="rewards-section" *ngIf="experienciaGanada > 0">
+                <h3>Recompensas obtenidas:</h3>
+                <div class="rewards-list">
+                    <div class="reward-item">
+                        <span class="reward-icon">⭐</span>
+                        <span>+{{experienciaGanada}} EXP</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-actions no-capture">
+                <button mat-raised-button color="primary" (click)="compartirResultados()">
+                    Compartir <mat-icon>share</mat-icon>
+                </button>
+                <button mat-icon-button (click)="reiniciarTest()" matTooltip="Volver a jugar">
+                    <mat-icon>replay</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -150,6 +150,7 @@ export class DashboardComponent implements OnInit {
   // Navigation Methods for Quick Actions
   irATestVocacional(): void { this.router.navigate(['/quests/vocational-test']); }
   irATestPersonalidad(): void { this.router.navigate(['/quests/personality-test']); }
+  irAAcertijos(): void { this.router.navigate(['/quests/quick-riddles']); }
 
   irATraining(): void { this.router.navigate(['/training']); }
   irAExams(): void { this.router.navigate(['/exams']); }

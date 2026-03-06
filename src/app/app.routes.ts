@@ -40,6 +40,10 @@ export const routes: Routes = [
             {
                 path: 'personality-test',
                 loadComponent: () => import('./features/quests/personality-test/personality-test').then(m => m.PersonalityTestComponent)
+            },
+            {
+                path: 'quick-riddles',
+                loadComponent: () => import('./features/quests/quick-riddles/quick-riddles').then(m => m.QuickRiddlesComponent)
             }
         ]
     },
