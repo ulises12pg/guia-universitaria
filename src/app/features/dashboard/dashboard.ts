@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { GamificationService } from '../../core/services/gamification.service';
-import { AuthService } from '../../core/services/auth.service';
 import { User, Logro, Mision } from '../../shared/models/user.model';
 import { Observable } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
@@ -47,7 +46,6 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private gamificationService: GamificationService,
-    private authService: AuthService,
     private router: Router,
     private snackBar: MatSnackBar,
     private dialog: MatDialog
@@ -71,13 +69,7 @@ export class DashboardComponent implements OnInit {
     this.stats[3].valor = this.usuario.monedas || 0;
   }
 
-  logout(): void {
-    this.authService.signOut().then(() => {
-      // Gamification service subscribes to auth, so it should handle state clear?
-      // But to be explicit, maybe reload or router handles it.
-      // AuthService.signOut() triggers router navigate to /auth.
-    });
-  }
+
 
   editProfile(): void {
     if (!this.usuario) return;

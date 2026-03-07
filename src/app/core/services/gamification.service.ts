@@ -6,7 +6,6 @@ import html2canvas from 'html2canvas';
 import { Share } from '@capacitor/share';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { User, Medalla, Logro, Recompensa, Mision } from '../../shared/models/user.model';
-import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -181,105 +180,14 @@ export class GamificationService {
     public usuario$ = this.usuarioSubject.asObservable();
     private currentUserId: string | null = null; // Track current key
 
-    constructor(private authService: AuthService) {
-        // Subscribe to Auth changes
-        this.authService.currentUser.update(u => u); // Ensure signal is active (optional)
-
-        // Signal effect or manual subscription? 
-        // using effect() is better if in injection context, but manually subscribing to signal is fine too
-        // Since we are in constructor...
-        // Actually, let's use the signal directly or effect if we convert content to use basic subscription for compatibility
-
-        // Helper to watch signal
-        const val = this.authService.currentUser();
-        if (val) this.loadUser(val.id, val.email);
-
-        // We need to react to future changes. Signal -> Observable or Effect.
-        // Since we don't have effect() easily outside component without runInInjectionContext sometimes
-        // Let's simplified assuming we can poll or Auth notifies us.
-        // Actually Auth has `currentUser: WritableSignal`.
-        // Let's use a standard workaround or just verify if Auth calls us?
-        // Better: Auth service can emit an event or we just check on init. 
-        // User said: "según el usuario Logueado... ya lea".
-        // Let's try to subscribe to the Supabase auth state change directly here too?
-        // No, avoid duplication.
-        // Let's make GamificationService expose a method `setUser(user: any)` and call it from App/Dashboard?
-        // OR, inject Auth and use `toObservable`?
-        // Simplified: Just use `effect` in constructor (Angular 16+).
+    constructor() {
+        this.loadGuestUser();
     }
 
-    // Call this when Auth detects change (or use effect if available)
-    public syncWithAuth(supabaseUser: any) {
-        if (supabaseUser) {
-            this.loadUser(supabaseUser.id, supabaseUser.email);
-        } else {
-            this.loadGuestUser();
-        }
-    }
+
 
     getUsuarioActual(): User {
         return this.usuarioSubject.value;
-    }
-
-    private async loadUser(userId: string, email: string | undefined): Promise<void> {
-        this.currentUserId = userId;
-        const key = `innovauni_data_${userId}`;
-
-        // 1. Load from LocalStorage first (Cache / Offline)
-        const stored = localStorage.getItem(key);
-        let localUser: User | null = null;
-        if (stored) {
-            localUser = JSON.parse(stored);
-            this.ensureDataIntegrity(localUser!);
-            if (email && localUser!.email !== email) localUser!.email = email;
-            this.usuarioSubject.next(localUser!);
-        }
-
-        // 2. Fetch from Supabase (Source of Truth)
-        try {
-            const { data, error } = await this.authService.supabaseClient
-                .from('profiles')
-                .select('*')
-                .eq('id', userId)
-                .maybeSingle();
-
-            if (data && data.game_data && Object.keys(data.game_data).length > 0) {
-                const cloudUser = data.game_data as User;
-                // Merge or overwrite? Cloud should win usually, unless local is newer? 
-                // For simplicity: Cloud wins if it exists.
-
-                // Ensure ID and Email are correct
-                cloudUser.id = userId;
-                cloudUser.email = email || cloudUser.email;
-                if (!cloudUser.nombre && data.full_name) cloudUser.nombre = data.full_name;
-
-                this.ensureDataIntegrity(cloudUser);
-                this.usuarioSubject.next(cloudUser);
-
-                // Update local cache
-                localStorage.setItem(key, JSON.stringify(cloudUser));
-            } else if (!localUser) {
-                // No cloud data, no local data -> New User
-                const newUser = this.getDefaultUser();
-                newUser.id = userId;
-                newUser.email = email || '';
-                newUser.nombre = email?.split('@')[0] || 'Usuario';
-                this.usuarioSubject.next(newUser);
-                this.guardarProgreso(); // Init DB
-            } else {
-                // Has local data but no cloud data (or empty cloud). Sync local to cloud.
-                this.guardarProgreso();
-            }
-        } catch (err) {
-            console.error('Error loading from Supabase:', err);
-            // Fallback is already loaded from localStorage
-            if (!localUser) {
-                const newUser = this.getDefaultUser();
-                newUser.id = userId;
-                newUser.email = email || '';
-                this.usuarioSubject.next(newUser);
-            }
-        }
     }
 
     private loadGuestUser(): void {
@@ -595,32 +503,7 @@ export class GamificationService {
 
         // 1. Save to LocalStorage (Immediate feedback)
         localStorage.setItem(key, JSON.stringify(user));
-
-        // 2. Sync to Supabase (Background)
-        if (this.currentUserId) {
-            // Debounce could be added here to avoid spamming DB on every XP gain
-            // For now, fire and forget (optimistic)
-            const profileUpdate = {
-                id: this.currentUserId,
-                updated_at: new Date(),
-                username: user.email?.split('@')[0] || 'user',
-                full_name: user.nombre,
-                // avatar_url removed as it may not exist in user's schema
-                game_data: user
-            };
-
-            this.authService.supabaseClient
-                .from('profiles')
-                .upsert(profileUpdate)
-                .then(({ error }) => {
-                    if (error) console.error('Error syncing to Supabase:', error);
-                });
-        }
     }
-
-    // getUsuarioInicial replaced by loadGasuestUser/loadUser logic
-    // Keeping a helper if needed or removing it.
-    // We already initialized Subject with getDefaultUser() in declaration.
 
     private getDefaultUser(): User {
         return {

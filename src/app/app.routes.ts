@@ -1,10 +1,9 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: '/auth',
+        redirectTo: '/onboarding',
         pathMatch: 'full'
     },
     {
@@ -12,22 +11,15 @@ export const routes: Routes = [
         loadComponent: () => import('./features/onboarding/onboarding').then(m => m.OnboardingComponent)
     },
     {
-        path: 'auth',
-        loadComponent: () => import('./features/auth/auth').then(m => m.AuthComponent)
-    },
-    {
         path: 'dashboard',
-        loadComponent: () => import('./features/dashboard/dashboard').then(m => m.DashboardComponent),
-        canActivate: [authGuard]
+        loadComponent: () => import('./features/dashboard/dashboard').then(m => m.DashboardComponent)
     },
     {
         path: 'universities',
-        loadComponent: () => import('./features/universities/universities').then(m => m.UniversitiesComponent),
-        canActivate: [authGuard]
+        loadComponent: () => import('./features/universities/universities').then(m => m.UniversitiesComponent)
     },
     {
         path: 'quests',
-        canActivate: [authGuard],
         children: [
             {
                 path: '',
@@ -49,17 +41,19 @@ export const routes: Routes = [
     },
     {
         path: 'training',
-        loadComponent: () => import('./features/training/daily-training.component').then(m => m.DailyTrainingComponent),
-        canActivate: [authGuard]
+        loadComponent: () => import('./features/training/daily-training.component').then(m => m.DailyTrainingComponent)
     },
     {
         path: 'exams',
-        loadComponent: () => import('./features/exams/exams.component').then(m => m.ExamsComponent),
-        canActivate: [authGuard]
+        loadComponent: () => import('./features/exams/exams.component').then(m => m.ExamsComponent)
     },
     {
         path: 'profile',
-        loadComponent: () => import('./features/profile/profile').then(m => m.ProfileComponent),
-        canActivate: [authGuard]
+        loadComponent: () => import('./features/profile/profile').then(m => m.ProfileComponent)
+    },
+    {
+        path: '**',
+        redirectTo: '/dashboard'
     }
 ];
+

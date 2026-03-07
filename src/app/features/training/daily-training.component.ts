@@ -88,19 +88,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
                   <span>+{{ expEarned }} EXP</span>
               </div>
 
-              <div class="bonus-section" *ngIf="!bonusUsed">
-                  <button mat-raised-button class="bonus-btn" (click)="watchAdForBonus()">
-                      <mat-icon>play_circle</mat-icon>
-                      Ver anuncio para +5 preguntas extra
-                  </button>
-                  <span class="bonus-hint">Gana EXP adicional practicando más</span>
-              </div>
-              <div class="bonus-section" *ngIf="bonusUsed">
-                  <span class="bonus-used">✅ Preguntas extra desbloqueadas</span>
-              </div>
-
               <div class="actions">
-                  <button mat-raised-button color="accent" *ngIf="bonusUsed && !bonusCompleted" (click)="startBonus()">Iniciar Preguntas Extra</button>
                   <button mat-raised-button color="primary" (click)="goBack()">Volver al Dashboard</button>
               </div>
           </mat-card>
@@ -178,33 +166,6 @@ import { trigger, transition, style, animate } from '@angular/animations';
             margin: 20px 0; font-size: 1.2rem; font-weight: bold; color: #ff8c00; 
             background: #fff3e0; padding: 10px; border-radius: 8px; display: inline-block;
         }
-        .bonus-section {
-            margin: 25px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-        }
-        .bonus-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-            color: white !important;
-            padding: 12px 24px !important;
-            font-size: 1rem !important;
-            height: auto !important;
-            display: flex !important;
-            align-items: center !important;
-            gap: 8px !important;
-            border-radius: 12px !important;
-        }
-        .bonus-hint {
-            font-size: 0.85rem;
-            color: #888;
-        }
-        .bonus-used {
-            font-size: 1rem;
-            color: #4caf50;
-            font-weight: bold;
-        }
         .actions { justify-content: center; }
     }
   `],
@@ -226,9 +187,6 @@ export class DailyTrainingComponent {
     score = 0;
     completed = false;
     expEarned = 0;
-    bonusUsed = false;
-    bonusCompleted = false;
-
     constructor(
         private trainingService: TrainingService,
         private gamificationService: GamificationService,
@@ -286,31 +244,6 @@ export class DailyTrainingComponent {
         // Recalibrated: Base 100 + 20 per correct answer
         this.expEarned = 100 + (this.score * 20);
         this.gamificationService.registrarEntrenamientoCompletado(this.expEarned);
-
-    }
-
-    /**
-     * Muestra un anuncio rewarded para desbloquear 5 preguntas extra
-     */
-    async watchAdForBonus() {
-        this.bonusUsed = true;
-    }
-
-    /**
-     * Inicia las 5 preguntas bonus después de ver el anuncio
-     */
-    startBonus() {
-        // Obtener 5 preguntas nuevas
-        const bonusQuestions = this.trainingService.getDailyChallenge(5);
-        this.questions = bonusQuestions;
-        this.currentIndex = 0;
-        this.currentQuestion = this.questions[0];
-        this.selectedAnswerIndex = null;
-        this.isAnswerChecked = false;
-        this.score = 0;
-        this.completed = false;
-        this.bonusCompleted = true;
-        this.expEarned = 0;
     }
 
     getFeedbackMessage(): string {

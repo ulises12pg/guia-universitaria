@@ -28,7 +28,6 @@ export class AuthService {
             this.currentUser.set(session?.user ?? null);
             if (event === 'SIGNED_OUT') {
                 this.currentUser.set(null);
-                this.router.navigate(['/auth']);
             }
         });
     }
