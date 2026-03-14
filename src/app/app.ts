@@ -13,7 +13,7 @@ import { LegalModalComponent } from './shared/components/legal-modal/legal-modal
   styleUrl: './app.scss'
 })
 export class App implements OnInit {
-  protected readonly title = signal('InnovaUni 1.2');
+  protected readonly title = signal('InnovaUni 2.5');
 
   constructor(
     private dialog: MatDialog
@@ -30,10 +30,10 @@ export class App implements OnInit {
       case 'terms':
         title = 'Términos y Condiciones';
         content = `
-          <p>Bienvenido a InnovaUni 1.2. Al usar esta aplicación, aceptas nuestros términos.</p>
+          <p>Bienvenido a InnovaUni 2.5. Al usar esta aplicación, aceptas nuestros términos.</p>
           <p>1. <strong>Uso Personal:</strong> Esta herramienta es para orientación vocacional personal.</p>
           <p>2. <strong>Sin Garantías:</strong> Los resultados son sugerencias basadas en tus respuestas y no garantizan admisión a ninguna institución.</p>
-          <p>3. <strong>Propiedad Intelectual:</strong> Todo el contenido es propiedad de InnovaUni 1.2 2026.</p>
+          <p>3. <strong>Propiedad Intelectual:</strong> Todo el contenido es propiedad de InnovaUni 2.5 2026.</p>
         `;
         break;
       case 'data':

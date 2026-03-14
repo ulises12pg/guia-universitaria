@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -17,9 +19,12 @@ import { University } from '../../shared/models/university.model';
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     MatCardModule,
     MatButtonModule,
     MatChipsModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatIconModule,
     MatTabsModule,
     MatTooltipModule
@@ -217,6 +222,8 @@ export class UniversitiesComponent {
   viewMode: any = 'list';
   hasCompared = false;
   favoriteIds: string[] = [];
+  searchQuery: string = '';
+  private activeTabIndex: number = 0;
 
   constructor(
     private router: Router,
@@ -301,10 +308,34 @@ export class UniversitiesComponent {
   }
 
   onTabChange(index: number) {
-    if (index === 0) {
-      this.filteredUniversities = this.universities;
+    this.activeTabIndex = index;
+    this.applyFilters();
+  }
+
+  onSearchChange() {
+    this.applyFilters();
+  }
+
+  private applyFilters() {
+    const query = this.searchQuery.trim().toLowerCase();
+    let base: University[];
+
+    if (this.activeTabIndex === 0) {
+      base = this.universities;
     } else {
-      this.filteredUniversities = this.universities.filter(u => this.favoriteIds.includes(u.id));
+      base = this.universities.filter(u => this.favoriteIds.includes(u.id));
+    }
+
+    if (query) {
+      this.filteredUniversities = base.filter(u =>
+        u.nombre.toLowerCase().includes(query) ||
+        (u.siglas || '').toLowerCase().includes(query) ||
+        u.ubicacion.toLowerCase().includes(query) ||
+        u.areas.some(a => a.toLowerCase().includes(query)) ||
+        u.descripcion.toLowerCase().includes(query)
+      );
+    } else {
+      this.filteredUniversities = base;
     }
   }
 

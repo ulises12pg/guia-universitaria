@@ -584,7 +584,7 @@ export class GamificationService {
         yPos += 15;
         doc.setFontSize(18);
         doc.setTextColor('#E91E63'); // Fun pink
-        doc.text('InnovaUni 1.2 reconoce a:', width / 2, yPos, { align: 'center' });
+        doc.text('InnovaUni 2.5 reconoce a:', width / 2, yPos, { align: 'center' });
 
         yPos += 20;
         doc.setFont('helvetica', 'bolditalic');
@@ -676,7 +676,7 @@ export class GamificationService {
         doc.setFont('courier', 'bold');
         doc.setFontSize(10);
         doc.setTextColor('#888');
-        doc.text(`Generado el: ${today} en InnovaUni 1.2 - ¡Sigue explorando!`, width / 2, footerY, { align: 'center' });
+        doc.text(`Generado el: ${today} en InnovaUni 2.5 - ¡Sigue explorando!`, width / 2, footerY, { align: 'center' });
         // Save
         doc.save(`certificado_innovauni_${user.nombre.replace(/\s+/g, '_')}.pdf`);
     }
@@ -743,8 +743,8 @@ export class GamificationService {
 
             // Compartir el archivo
             await Share.share({
-                title: 'Mis Resultados InnovaUni 2.0',
-                text: '¡Mira mis resultados vocacionales en InnovaUni 2.0! 🚀',
+                title: 'Mis Resultados InnovaUni 2.5',
+                text: '¡Mira mis resultados vocacionales en InnovaUni 2.5! 🚀',
                 url: savedFile.uri,
                 dialogTitle: 'Compartir mis resultados'
             });

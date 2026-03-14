@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">InnovaUni 1.2</string>
-    <string name="title_activity_main">InnovaUni 1.2</string>
+    <string name="app_name">InnovaUni 2.5</string>
+    <string name="title_activity_main">InnovaUni 2.5</string>
     <string name="package_name">com.innovauni.app</string>
     <string name="custom_url_scheme">com.innovauni.app</string>
 </resources>

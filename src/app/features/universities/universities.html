@@ -17,6 +17,15 @@
                 </ng-template>
             </mat-tab>
         </mat-tab-group>
+
+        <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Buscar universidad...</mat-label>
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput [(ngModel)]="searchQuery" (input)="onSearchChange()" placeholder="Nombre, siglas, área o ubicación">
+            <button *ngIf="searchQuery" matSuffix mat-icon-button (click)="searchQuery = ''; onSearchChange()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
     </div>
 
     <!-- Comparison Floating Bar (Redesigned) -->

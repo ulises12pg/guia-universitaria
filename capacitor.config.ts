@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.innovauni.app',
-  appName: 'InnovaUni 1.2',
+  appName: 'InnovaUni 2.5',
   webDir: 'dist/innova-uni/browser',
 
   plugins: {
