@@ -2,7 +2,7 @@
     <div class="welcome-section">
         <div class="user-info">
             <div class="header-row">
-                <h1>Hola, {{ (usuario$ | async)?.nombre || 'Estudiante' }}</h1>
+                <h1>Hola, {{ (usuario$ | async)?.nombre || 'Estudiante' }} ✨</h1>
                 <div class="header-actions">
                     <button mat-icon-button (click)="editProfile()" matTooltip="Editar Perfil">
                         <mat-icon>edit</mat-icon>
@@ -15,59 +15,56 @@
                     <mat-icon>school</mat-icon> {{ usuario.escuela }}
                 </p>
                 <p *ngIf="usuario.edad">
-                    {{ usuario.edad }} años
+                    <mat-icon>cake</mat-icon> {{ usuario.edad }} años
                 </p>
             </div>
         </div>
 
-        <div class="level-badge" [style.background]="rangoActual.color + '40'"
+        <div class="level-badge" [style.background]="rangoActual.color + '20'"
             [style.border]="'1px solid ' + rangoActual.color">
             <mat-icon [style.color]="rangoActual.color">{{ rangoActual.icono }}</mat-icon>
             <span class="level-text" [style.color]="rangoActual.color">{{ rangoActual.titulo }}</span>
             <mat-progress-bar mode="determinate" [value]="getPorcentajeNivel(usuario$ | async)"></mat-progress-bar>
             <div class="xp-text" *ngIf="usuario$ | async as usuario">
-                {{ usuario.experiencia }} / {{ usuario.experienciaSiguienteNivel }} XP
+                Nivel {{ usuario.nivel }} | {{ usuario.experiencia }} / {{ usuario.experienciaSiguienteNivel }} XP
             </div>
         </div>
     </div>
 
     <div class="actions-section">
         <div class="quick-actions-grid">
-
             <!-- Group 1: Tests -->
             <div class="action-group">
-                <h3><mat-icon>psychology</mat-icon> Tests</h3>
+                <h3><mat-icon>psychology</mat-icon> Perfil Vocacional</h3>
                 <button mat-raised-button color="primary" (click)="irATestVocacional()">
-                    Test Vocacional
+                    Test Vocacional (RIASEC)
                 </button>
-                <button mat-raised-button color="warn" (click)="irATestPersonalidad()">
-                    Test Personalidad
+                <button mat-raised-button color="accent" (click)="irATestPersonalidad()">
+                    Test de Personalidad
                 </button>
             </div>
 
             <!-- Group 2: Entrenamiento -->
             <div class="action-group">
                 <h3><mat-icon>fitness_center</mat-icon> Entrenamiento</h3>
-                <button mat-raised-button style="background-color: #9c27b0; color: white;" (click)="irATraining()">
-                    Reto del Día
+                <button mat-raised-button style="background-color: #10b981; color: white;" (click)="irATraining()">
+                    <mat-icon style="margin-right:8px; font-size:18px;">event_available</mat-icon> Reto del Día
                 </button>
-                <button mat-raised-button style="background-color: #ff9800; color: white;" (click)="irAAcertijos()">
-                    Acertijos Rápidos
+                <button mat-raised-button style="background-color: #f59e0b; color: white;" (click)="irAAcertijos()">
+                    <mat-icon style="margin-right:8px; font-size:18px;">lightbulb</mat-icon> Acertijos Rápidos
                 </button>
-                <button mat-raised-button style="background-color: #3f51b5; color: white;" (click)="irAExams()">
-                    Guía Ceneval
+                <button mat-raised-button style="background-color: #8b5cf6; color: white;" (click)="irAExams()">
+                    <mat-icon style="margin-right:8px; font-size:18px;">menu_book</mat-icon> Guía Ceneval
                 </button>
             </div>
 
             <!-- Group 3: Universidades -->
             <div class="action-group">
                 <h3><mat-icon>school</mat-icon> Universidades</h3>
-                <button mat-raised-button color="accent" (click)="irAUniversidades()">
-                    Explorar Todo
+                <button mat-raised-button style="background-color: #3b82f6; color: white;" (click)="irAUniversidades()">
+                    <mat-icon style="margin-right:8px; font-size:18px;">travel_explore</mat-icon> Explorar Todo
                 </button>
-                <!-- Could add favorites button here later -->
             </div>
-
         </div>
     </div>
 
@@ -82,10 +79,9 @@
                 <div class="mission-info">
                     <h3>{{ mision.titulo }}</h3>
                     <p>{{ mision.descripcion }}</p>
-                    <mat-progress-bar mode="determinate"
+                    <mat-progress-bar color="accent" mode="determinate"
                         [value]="(mision.progreso / (mision.meta || 1)) * 100"></mat-progress-bar>
                 </div>
-
             </mat-card>
         </div>
     </div>
@@ -95,13 +91,9 @@
         <div class="achievements-grid">
             <mat-card *ngFor="let logro of usuario.logros" class="achievement-card" [class.completed]="logro.completado"
                 (click)="showAchievementDetails(logro)" [style.cursor]="'pointer'">
-                <div class="achievement-icon" [style.filter]="logro.completado ? 'none' : 'grayscale(100%)'">
+                <div class="achievement-icon" [style.filter]="logro.completado ? 'none' : 'grayscale(100%) opacity(0.5)'">
                     {{ logro.icono }}
                 </div>
-                <!-- <div class="achievement-info">
-                    <h4>{{ logro.titulo }}</h4>
-                    <p>{{ logro.descripcion }}</p>
-                </div> -->
                 <div class="progress-ring" *ngIf="!logro.completado">
                     <span class="progress-text">{{ logro.progreso }}/{{ logro.progresoMaximo }}</span>
                 </div>
@@ -111,11 +103,11 @@
             </mat-card>
         </div>
 
-        <div class="hall-of-fame" *ngIf="allMedalsEarned">
-            <h3>🏆 ¡Salón de la Fama! 🏆</h3>
-            <p>Has desbloqueado todo tu potencial. ¡Comparte tus logros!</p>
+        <div class="hall-of-fame" *ngIf="true"> <!-- Changed to true to allow user to generate certificate anytime -->
+            <h3>🏆 Mi Historial Universitario 🏆</h3>
+            <p>Genera un certificado digital de alta definición con todos tus logros, resultados y avances para compartir con tus amigos y familiares.</p>
             <button mat-raised-button color="accent" class="certificate-btn" (click)="verCompendio()">
-                <mat-icon>share</mat-icon> VER LOGROS
+                <mat-icon>workspace_premium</mat-icon> GENERAR CERTIFICADO
             </button>
         </div>
     </div>
@@ -125,103 +117,87 @@
         <div class="danger-actions">
             <button mat-stroked-button color="warn" (click)="resetGamification()">
                 <mat-icon>restart_alt</mat-icon>
-                Resetear Progreso (EXP/Logros)
+                Resetear Progreso
             </button>
             <button mat-flat-button color="warn" (click)="hardReset()">
                 <mat-icon>delete_forever</mat-icon>
-                Hard Reset (Borrar Todo)
+                Borrar Todo
             </button>
         </div>
     </div>
 </div>
 
-<!-- Modal Compendio (Tipo Certificado Visual) -->
-<div class="compendio-overlay" *ngIf="mostrarCompendio"
-    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; display: flex; justify-content: center; align-items: center; overflow-y: auto;">
+<!-- Modal Certificado HD -->
+<div class="compendio-overlay" *ngIf="mostrarCompendio">
+    <div class="compendio-container">
+        
+        <!-- Botón Cerrar (Solo visible en pantalla) -->
+        <button mat-icon-button (click)="cerrarCompendio()" class="no-capture"
+            style="position: absolute; top: 20px; right: 20px; color: white; background: rgba(0,0,0,0.5); z-index: 10000;">
+            <mat-icon>close</mat-icon>
+        </button>
 
-    <div class="compendio-container" style="width: 100%; max-width: 400px; padding: 20px;">
-        <div class="compendio-card" id="compendio-card"
-            style="background: white; width: 100%; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-family: 'Roboto', sans-serif; position: relative;">
-
-            <!-- Botón Cerrar (Solo visible en pantalla) -->
-            <button mat-icon-button (click)="cerrarCompendio()" class="no-capture"
-                style="position: absolute; top: 10px; right: 10px; color: #666; z-index: 100;">
-                <mat-icon>close</mat-icon>
-            </button>
-
-            <!-- Header -->
-            <div style="text-align: center; margin-bottom: 20px;">
-                <div style="font-size: 40px;">🎓</div>
-                <h2 style="margin: 10px 0 5px; color: #3f51b5; font-weight: bold; font-family: sans-serif;">InnovaUni
-                    2.5</h2>
-                <p style="margin: 0; color: #666; font-size: 14px;">Mi Historial Universitario</p>
+        <div class="cert-card" id="compendio-card">
+            
+            <div class="cert-header">
+                <div class="cert-logo">🎓</div>
+                <h2>InnovaUni</h2>
+                <h3>Certificado de Orientación</h3>
             </div>
 
-            <!-- Perfil -->
-            <div
-                style="background: #f5f5f5; padding: 15px; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; gap: 15px;">
-                <div
-                    style="width: 50px; height: 50px; background: #3f51b5; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold;">
-                    {{ usuario?.nombre?.charAt(0) || 'U' }}
-                </div>
-                <div>
-                    <h3 style="margin: 0; font-size: 18px; color: #333;">{{ usuario?.nombre }}</h3>
-                    <p
-                        style="margin: 5px 0 0; color: #666; font-size: 13px; display: flex; align-items: center; gap: 4px;">
-                        <mat-icon style="font-size: 14px; width: 14px; height: 14px;">school</mat-icon>
-                        {{ usuario?.escuela || 'Sin escuela' }}
-                    </p>
-                </div>
+            <div class="cert-body">
+                <div class="cert-presented-to">Se otorga el presente reconocimiento a</div>
+                <div class="cert-name">{{ usuario?.nombre || 'Estudiante' }}</div>
+                <div class="cert-school">Institución: {{ usuario?.escuela || 'No especificada' }}</div>
             </div>
 
-            <!-- Resultados Tests -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
-                <div style="background: #e8eaf6; padding: 15px; border-radius: 12px; text-align: center;">
-                    <mat-icon style="color: #3f51b5;">psychology</mat-icon>
-                    <p
-                        style="font-size: 10px; margin: 5px 0; color: #666; text-transform: uppercase; font-weight: bold;">
-                        Vocación</p>
-                    <strong style="color: #3f51b5; display: block; font-size: 12px;">{{ usuario?.vocationalTestResult ||
-                        'Pendiente' }}</strong>
+            <div class="cert-stats">
+                <div class="stat-box">
+                    <div class="stat-title">Nivel Alcanzado</div>
+                    <div class="stat-value highlight">{{ usuario?.nivel || 1 }} ({{ rangoActual.titulo }})</div>
                 </div>
-                <div style="background: #e1f5fe; padding: 15px; border-radius: 12px; text-align: center;">
-                    <mat-icon style="color: #03a9f4;">self_improvement</mat-icon>
-                    <p
-                        style="font-size: 10px; margin: 5px 0; color: #666; text-transform: uppercase; font-weight: bold;">
-                        Personalidad</p>
-                    <strong style="color: #03a9f4; display: block; font-size: 12px;">{{ usuario?.personalityTestResult
-                        || 'Pendiente' }}</strong>
+                <div class="stat-box">
+                    <div class="stat-title">Perfil Vocacional</div>
+                    <div class="stat-value">{{ usuario?.vocationalTestResult || 'Pendiente' }}</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-title">Personalidad</div>
+                    <div class="stat-value">{{ usuario?.personalityTestResult || 'Pendiente' }}</div>
                 </div>
             </div>
 
-            <!-- Medallas Section -->
-            <div style="margin-bottom: 20px; text-align: center;">
-                <h4 style="margin: 0 0 10px; font-size: 14px; color: #333; font-weight: bold;">Medallas desbloqueadas
-                </h4>
-                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
+            <div class="cert-medals">
+                <div class="medals-title">Medallas y Hazañas Destacadas</div>
+                <div class="medals-grid">
                     <ng-container *ngFor="let logro of usuario?.logros">
-                        <div *ngIf="logro.completado"
-                            style="width: 36px; height: 36px; background: #fff3e0; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-                            <span style="font-size: 20px;">{{ logro.icono }}</span>
+                        <div *ngIf="logro.completado" class="medal-item" title="{{ logro.titulo }}">
+                            {{ logro.icono }}
                         </div>
                     </ng-container>
+                    <div *ngIf="!usuario?.logros?.length" style="color: #94a3b8; font-style: italic;">
+                        Aún explorando el camino...
+                    </div>
                 </div>
-                <p *ngIf="!usuario?.logros?.length" style="font-size: 12px; color: #999; font-style: italic;">Aún no
-                    tienes medallas.</p>
             </div>
 
-            <!-- Footer con Fecha -->
-            <div style="text-align: center; border-top: 1px dashed #ddd; padding-top: 15px; margin-top: 15px;">
-                <p style="margin: 0; color: #999; font-size: 11px;">Generado el {{ today | date:'dd/MM/yyyy' }}</p>
+            <div class="cert-footer">
+                <div class="date-text">
+                    Emitido el: <strong>{{ today | date:'dd/MM/yyyy' }}</strong><br>
+                    Plataforma InnovaUni 2.5
+                </div>
+                <div class="signature-line">
+                    <div class="line"></div>
+                    <div class="label">Firma de Orientación</div>
+                </div>
             </div>
 
-            <!-- Action Buttons (No Capture) -->
-            <div style="margin-top: 25px;" class="no-capture">
-                <button mat-raised-button color="primary" style="width: 100%; padding: 8px; margin-bottom: 10px;"
-                    (click)="compartirCompendio()">
-                    <mat-icon style="margin-right: 8px;">share</mat-icon> COMPARTIR IMAGEN
-                </button>
-            </div>
+        </div>
+
+        <!-- Action Buttons (No Capture) -->
+        <div class="share-action-area no-capture">
+            <button mat-raised-button (click)="compartirCompendio()">
+                <mat-icon style="margin-right: 8px;">download</mat-icon> COMPARTIR / GUARDAR EN HD
+            </button>
         </div>
     </div>
 </div>

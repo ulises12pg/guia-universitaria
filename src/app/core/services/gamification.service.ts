@@ -11,16 +11,16 @@ import { User, Medalla, Logro, Recompensa, Mision } from '../../shared/models/us
     providedIn: 'root'
 })
 export class GamificationService {
-    private readonly NIVELES_EXP = [0, 100, 250, 500, 1000, 1500, 2200, 3000, 4000, 5500];
+    private readonly NIVELES_EXP = [0, 100, 250, 500, 800, 1200, 1700, 2300, 3000, 3800, 4700, 5700, 6800, 8000, 9500, 11500, 14000, 17000, 20000, 25000];
 
     getRangoActual(nivel: number): { titulo: string, icono: string, color: string } {
-        if (nivel >= 5) {
-            return { titulo: 'Diamante', icono: 'diamond', color: '#b9f2ff' }; // Diamond blue
-        } else if (nivel >= 3) {
-            return { titulo: 'Oro', icono: 'emoji_events', color: '#ffd700' }; // Gold
-        } else {
-            return { titulo: 'Plata', icono: 'stars', color: '#c0c0c0' }; // Silver
-        }
+        if (nivel >= 15) return { titulo: 'Leyenda', icono: 'local_fire_department', color: '#ff4500' };
+        if (nivel >= 10) return { titulo: 'Maestro', icono: 'workspace_premium', color: '#9c27b0' };
+        if (nivel >= 7) return { titulo: 'Platino', icono: 'diamond', color: '#e5e4e2' };
+        if (nivel >= 5) return { titulo: 'Diamante', icono: 'diamond', color: '#b9f2ff' };
+        if (nivel >= 3) return { titulo: 'Oro', icono: 'emoji_events', color: '#ffd700' };
+        if (nivel >= 2) return { titulo: 'Plata', icono: 'stars', color: '#c0c0c0' };
+        return { titulo: 'Bronce', icono: 'military_tech', color: '#cd7f32' };
     }
 
     private logrosDefinidos: Logro[] = [
@@ -93,6 +93,46 @@ export class GamificationService {
             progresoMaximo: 5,
             completado: false,
             recompensa: { tipo: 'experiencia', cantidad: 500 }
+        },
+        {
+            id: 'mente_brillante',
+            titulo: 'Mente Brillante',
+            descripcion: 'Resuelve 5 acertijos rápidos',
+            icono: '💡',
+            progreso: 0,
+            progresoMaximo: 5,
+            completado: false,
+            recompensa: { tipo: 'experiencia', cantidad: 300 }
+        },
+        {
+            id: 'disciplina_diaria',
+            titulo: 'Disciplina Diaria',
+            descripcion: 'Completa 3 retos del día',
+            icono: '📅',
+            progreso: 0,
+            progresoMaximo: 3,
+            completado: false,
+            recompensa: { tipo: 'medalla', cantidad: 1, itemId: 'constancia' }
+        },
+        {
+            id: 'sabio_ceneval',
+            titulo: 'Sabio Ceneval',
+            descripcion: 'Revisa la guía CENEVAL completa',
+            icono: '📜',
+            progreso: 0,
+            progresoMaximo: 1,
+            completado: false,
+            recompensa: { tipo: 'experiencia', cantidad: 200 }
+        },
+        {
+            id: 'maestro_universitario',
+            titulo: 'Maestro Universitario',
+            descripcion: 'Alcanza el nivel 10',
+            icono: '🌟',
+            progreso: 0,
+            progresoMaximo: 10,
+            completado: false,
+            recompensa: { tipo: 'medalla', cantidad: 1, itemId: 'leyenda_universitaria' }
         }
     ];
 
@@ -404,6 +444,13 @@ export class GamificationService {
     registrarEntrenamientoCompletado(xp: number): void {
         this.agregarExperiencia(xp, 'Entrenamiento Diario Completado');
         this.verificarProgresoMisiones('training_completed');
+        
+        // Progress for 'disciplina_diaria'
+        const usuario = this.usuarioSubject.value;
+        const logro = usuario.logros.find(l => l.id === 'disciplina_diaria');
+        if (logro) {
+            this.actualizarProgresoLogro('disciplina_diaria', logro.progreso + 1);
+        }
     }
 
     saveVocationalTestResult(result: string): void {
@@ -446,7 +493,9 @@ export class GamificationService {
             'explorador_bronce': 'Has dado tus primeros pasos explorando universidades',
             'analitico': 'Eres un experto comparando opciones educativas',
             'nivel_5': '¡Has alcanzado el nivel 5! Sigue así',
-            'maestro_vocacional': 'Completaste todos los tests disponibles'
+            'maestro_vocacional': 'Completaste todos los tests disponibles',
+            'constancia': 'Demostraste gran disciplina diaria',
+            'leyenda_universitaria': 'Alcanzaste el estatus de Maestro Universitario'
         };
         return descripciones[id] || 'Medalla especial por tus logros';
     }
@@ -719,9 +768,11 @@ export class GamificationService {
 
             // Capturar el elemento como canvas
             const canvas = await html2canvas(element, {
-                scale: 2, // Mejor calidad
+                scale: 4, // Mejor calidad HD
                 useCORS: true,
                 backgroundColor: null, // Fondo transparente si es posible, o blanco por defecto
+                allowTaint: true,
+                logging: false,
                 ignoreElements: (el) => {
                     return el.classList.contains(ignoreClase);
                 }
